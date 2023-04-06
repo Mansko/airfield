@@ -8,6 +8,8 @@ import { TitlebarComponent } from './shared/components/titlebar/titlebar.compone
 import { FacialDetectionComponent } from './pages/facial-detection/facial-detection.component';
 import { PoseEstimationComponent } from './pages/pose-estimation/pose-estimation.component';
 import { SoundRecognitionComponent } from './pages/sound-recognition/sound-recognition.component';
+import { NgxsModule } from '@ngxs/store';
+import { AppState } from './shared/store/app/app.state';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { SoundRecognitionComponent } from './pages/sound-recognition/sound-recog
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxsModule.forRoot([AppState]),
   ],
   providers: [],
   bootstrap: [AppComponent]
