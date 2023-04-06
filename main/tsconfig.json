@@ -1,0 +1,14 @@
+{
+  "compileOnSave": false,
+  "type": "module",
+  "module": "commonjs",
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "../dist/main",
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES6"
+  },
+  "include": ["./**/*"]
+}
