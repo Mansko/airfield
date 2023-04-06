@@ -9,7 +9,7 @@ export interface AppStateModel {
 @State<AppStateModel>({
   name: 'app',
   defaults: {
-    navigatorPosition: '-50',
+    navigatorPosition: '0',
   },
 })
 @Injectable()

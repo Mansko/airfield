@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from 'src/app/shared/store/app/app.state';
 import { UpdateNavigatorPosition } from 'src/app/shared/store/app/app.actions';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html',
@@ -15,7 +16,7 @@ export class HomeComponent implements AfterViewInit {
   public mouseDownAt: string = "0";
   public prevPercentage: string = "0";
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
     this.navigatorPosition$.subscribe(navigatorPosition => {
       this.prevPercentage = navigatorPosition;
     }); }
@@ -24,13 +25,7 @@ export class HomeComponent implements AfterViewInit {
     this.track = document.getElementById("image-track");
     this.track?.animate({
         transform: `translate(${this.prevPercentage}%, -50%)`
-      }, { duration: 0, fill: "forwards" });
-      
-    // Array.prototype.forEach.call(this.track?.getElementsByClassName("image"), (image) => {
-    //   image.animate({
-    //     objectPosition: `${100 + this.prevPercentage}% center`
-    //   }, { duration: 0, fill: "forwards" });
-    // });
+      }, { duration: 0, fill: "forwards" });      
 
     this.track?.addEventListener("pointerdown", (event: Event) => {
       this.mouseDownAt = (event as PointerEvent).clientX.toString();
@@ -43,7 +38,7 @@ export class HomeComponent implements AfterViewInit {
     window.addEventListener("pointermove", (event: Event) => {
       if(this.mouseDownAt === "0") return;
 
-      const mouseDelta = (parseFloat(this.track?.dataset["mouseDownAt"] ?? "0") - (event as PointerEvent).clientX) / 100;
+      const mouseDelta = (parseFloat(this.track?.dataset["mouseDownAt"] ?? "0") - (event as PointerEvent).clientX) / 50;
       const maxDelta = window.innerWidth / 2;
 
       const percentage = (mouseDelta / maxDelta) * -100;
@@ -59,7 +54,7 @@ export class HomeComponent implements AfterViewInit {
           objectPosition: `${100 + nextPercentage}% center`
         }, { duration: 1200, fill: "forwards" });
       });
-      
+
       this.store.dispatch(new UpdateNavigatorPosition(nextPercentage.toString()));
     });
   }
@@ -74,4 +69,7 @@ export class HomeComponent implements AfterViewInit {
     });
   }
 
+  changeRoute(route: string) {
+    this.router.navigate([route]);
+  }
 }

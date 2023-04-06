@@ -23,4 +23,3 @@ contextBridge.exposeInMainWorld('common', {
   close: () => ipcRenderer.send('window:close'),
   toggleDevTools: () => ipcRenderer.send('window:toggle-dev-tools'),
 });
-

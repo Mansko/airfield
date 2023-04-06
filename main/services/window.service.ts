@@ -103,6 +103,13 @@ export class WindowService {
     this.window.on('moved', () => {
       this.store?.setWindowPosition('window', this.window?.getPosition());
     });
+
+    this.window.webContents.on('before-input-event', (event: Event, input) => {
+      if (input.type === 'keyDown' && input.code === 'F12') {
+        event.preventDefault();
+        this.toggleDevTools();
+      }
+    });
   }
 
   private handleWindowIpcEvents() {

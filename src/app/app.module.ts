@@ -10,15 +10,22 @@ import { PoseEstimationComponent } from './pages/pose-estimation/pose-estimation
 import { SoundRecognitionComponent } from './pages/sound-recognition/sound-recognition.component';
 import { NgxsModule } from '@ngxs/store';
 import { AppState } from './shared/store/app/app.state';
+import { BackButtonComponent } from './shared/components/back-button/back-button.component';
+import { HTMLVideoDirective } from './shared/directive/htmlvideo.directive';
+import { MediaStreamDirective } from './shared/directive/media-stream.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     TitlebarComponent,
     HomeComponent,
+    BackButtonComponent,
     FacialDetectionComponent,
     PoseEstimationComponent,
-    SoundRecognitionComponent
+    SoundRecognitionComponent,
+    BackButtonComponent,
+    HTMLVideoDirective,
+    MediaStreamDirective
   ],
   imports: [
     BrowserModule,

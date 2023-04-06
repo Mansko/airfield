@@ -2,10 +2,7 @@
   display: block;
   position: fixed;
   height: 32px;
-  padding: 4px;
-  width: 100vw;
-  background: var(--main-bg-color);
-  border-bottom: solid 0px var(--main-border-color);
+  width: 100%;
 }
 
 #titlebar #drag-region {
