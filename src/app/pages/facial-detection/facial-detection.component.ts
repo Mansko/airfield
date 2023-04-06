@@ -8,6 +8,7 @@ const DETECTOR_CONFIG: faceLandmarksDetection.MediaPipeFaceMeshMediaPipeModelCon
   runtime: 'mediapipe',
   solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh',
   refineLandmarks: true,
+  maxFaces: 4,
 }
 
 @Component({
