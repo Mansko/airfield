@@ -1,0 +1,11 @@
+.titlebar {
+    display: block;
+    height: 32px;
+    width: 100%;
+  }
+  
+.main {
+    height: calc(100vh - 32px);
+    width: 100%;
+    overflow: hidden;
+  }

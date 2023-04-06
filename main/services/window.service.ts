@@ -4,6 +4,8 @@ import { StoreService } from './store.service';
 
 const ICON_PATH = 'assets/icons/icon-128x128.png';
 const WINDOW_PATH = 'dist/airfield/index.html';
+const PRELOAD_PATH = 'dist/main/preload.js';
+
 const MIN_WINDOW_WIDTH = 960;
 const MIN_WINDOW_HEIGHT = 640;
 
@@ -32,17 +34,24 @@ export class WindowService {
 
   private openWindow() {
     if (this.window !== null) return;
+    const bounds = this.store.getWindowSize('window');
+    const position = this.store.getWindowPosition('window');
     this.window = new BrowserWindow({
-      width: 480,
-      height: 280,
+      width: bounds[0],
+      height: bounds[1],
       minWidth: MIN_WINDOW_WIDTH,
       minHeight: MIN_WINDOW_HEIGHT,
+      x: position[0],
+      y: position[1],
       backgroundColor: '#333333',
       icon: join(app.getAppPath(), ICON_PATH),
       frame: false,
-      resizable: true,
-      movable: true,
       show: false,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        preload: join(app.getAppPath(), PRELOAD_PATH),
+      },
     });
     this.window.loadFile(join(app.getAppPath(), WINDOW_PATH));
     this.handleWindowEvents();
@@ -89,10 +98,10 @@ export class WindowService {
       this.window.webContents.send('window:unmaximize');
     });
     this.window.on('resized', () => {
-      this.store?.setWindowSize('editor', this.window?.getSize());
+      this.store?.setWindowSize('window', this.window?.getSize());
     });
     this.window.on('moved', () => {
-      this.store?.setWindowPosition('editor', this.window?.getPosition());
+      this.store?.setWindowPosition('window', this.window?.getPosition());
     });
   }
 

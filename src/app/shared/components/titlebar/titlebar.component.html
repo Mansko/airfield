@@ -1,0 +1,137 @@
+
+<!-- [ngStyle]="{ 'border-bottom-width': '1px' }" -->
+<div
+  id="titlebar">
+  <div id="drag-region">
+    <div *ngIf="hasIcon" id="window-icon">
+      <img
+        class="icon"
+        src="assets/icons/icon-48x48.png"
+        height="20px"
+        width="20px"
+        draggable="false" />
+    </div>
+
+    <div class="menubar">
+      <div
+        *ngIf="hasFileFunctions"
+        tabindex="-1"
+        id="file-menu"
+        class="menubar-menu-button">
+        <div *ngIf="hasFileFunctions" class="menubar-menu-title">File</div>
+        <div id="file-items" class="menubar-menu-items-holder">
+          <div
+            id="new-project"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: newProjectCallback === undefined }">
+            <span>New Project</span><span>Ctrl+N</span>
+          </div>
+          <hr class="menubar-menu-item-divider" />
+          <div
+            id="open-project"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: openProjectCallback === undefined }">
+            <span>Open Project</span><span>Ctrl+O</span>
+          </div>
+          <div
+            id="open-recent"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: openRecentCallback === undefined }">
+            <span>Open Recent</span><span>></span>
+          </div>
+          <hr class="menubar-menu-item-divider" />
+          <div
+            id="save"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: saveProjectCallback === undefined }">
+            <span>Save...</span><span>Ctrl+S</span>
+          </div>
+          <div
+            id="save-as"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: saveProjectAsCallback === undefined }">
+            <span>Save as...</span><span>Ctrl+Shift+S</span>
+          </div>
+          <hr class="menubar-menu-item-divider" />
+          <div id="exit" class="menubar-menu-item">
+            <span>Exit</span><span>Alt+F4</span>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="hasFileFunctions"
+        tabindex="-1"
+        id="edit-menu"
+        class="menubar-menu-button">
+        <div class="menubar-menu-title">Edit</div>
+        <div id="edit-items" class="menubar-menu-items-holder">
+          <div
+            id="undo"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: undoCallback === undefined }">
+            <span>Undo</span><span>Ctrl+Z</span>
+          </div>
+          <div
+            id="redo"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: redoCallback === undefined }">
+            <span>Redo</span><span>Ctrl+Y</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="hasFileFunctions"
+        tabindex="-1"
+        id="help-menu"
+        class="menubar-menu-button">
+        <div class="menubar-menu-title">Help</div>
+        <div id="help-items" class="menubar-menu-items-holder">
+          <div
+            id="release-notes"
+            class="menubar-menu-item"
+            [ngClass]="{ disabled: releaseNotesCallback === undefined }">
+            <span>Release Notes</span><span></span>
+          </div>
+          <hr class="menubar-menu-item-divider" />
+          <div id="toggle-dev-tools" class="menubar-menu-item">
+            <span>Toggle Developer Tools</span><span></span>
+          </div>
+          <hr class="menubar-menu-item-divider" />
+          <div id="about" class="menubar-menu-item">
+            <span>About</span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="title !== null" id="window-title">
+      <svg
+        height="8px"
+        width="8px"
+        viewBox="0 0 31.955 31.955"
+        *ngIf="hasSaveIndicator">
+        <circle class="saveIndicator" cx="16" cy="16" r="10" />
+      </svg>
+      <span class="title"> {{ title }} </span>
+    </div>
+
+    <div id="window-controls">
+      <div class="button" id="min-button">
+        <img class="icon" src="assets/window/min.png" draggable="false" />
+      </div>
+
+      <div class="button" id="max-button">
+        <img class="icon" src="assets/window/max.png" draggable="false" />
+      </div>
+
+      <div class="button" id="restore-button">
+        <img class="icon" src="assets/window/restore.png" draggable="false" />
+      </div>
+
+      <div class="button" id="close-button">
+        <img class="icon" src="assets/window/close.png" draggable="false" />
+      </div>
+    </div>
+  </div>
+</div>
