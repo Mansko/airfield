@@ -1,75 +1,41 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
-import { AppState } from 'src/app/shared/store/app/app.state';
-import { UpdateNavigatorPosition } from 'src/app/shared/store/app/app.actions';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+    
 
 @Component({
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  encapsulation: ViewEncapsulation.None 
 })
-export class HomeComponent implements AfterViewInit {
-  private track: HTMLElement | null = null;
-  @Select(AppState.navigatorPosition) private navigatorPosition$: Observable<string>;
+export class HomeComponent {  
+  slides = [
+    {
+      title: 'Facial Detection',
+      description: 'Detect faces in a video stream and draw a bounding box around them.',
+      imgsrc: 'assets/images/facial-detection.jpg',
+      link: '/facial-detection'
+    },
+    {
+      title: 'Pose Estimation',
+      description: 'Detect poses in a video stream and draw a skeleton around them.',
+      imgsrc: 'assets/images/pose-estimation.png',
+      link: '/pose-estimation'
+    },
+    {
+      title: 'Sound Recognition',
+      description: 'Detect sounds in a video stream and draw a bounding box around them.',
+      imgsrc: 'assets/images/sound-recognition.jpg',
+      link: '/sound-recognition'
+    }
+  ];
 
-  public mouseDownAt: string = "0";
-  public prevPercentage: string = "0";
+  constructor(private router: Router) { }
 
-  constructor(private store: Store, private router: Router) {
-    this.navigatorPosition$.subscribe(navigatorPosition => {
-      this.prevPercentage = navigatorPosition;
-    }); }
-
-  ngAfterViewInit() {
-    this.track = document.getElementById("image-track");
-    this.track?.animate({
-        transform: `translate(${this.prevPercentage}%, -50%)`
-      }, { duration: 0, fill: "forwards" });      
-
-    this.track?.addEventListener("pointerdown", (event: Event) => {
-      this.mouseDownAt = (event as PointerEvent).clientX.toString();
-    });
-    window.addEventListener("pointerup", (event: Event) => {
-      this.mouseDownAt = "0";
-      this.prevPercentage = this.track?.dataset["prevPercentage"] ?? "0";
-    });
-
-    window.addEventListener("pointermove", (event: Event) => {
-      if(this.mouseDownAt === "0") return;
-
-      const mouseDelta = (parseFloat(this.track?.dataset["mouseDownAt"] ?? "0") - (event as PointerEvent).clientX) / 50;
-      const maxDelta = window.innerWidth / 2;
-
-      const percentage = (mouseDelta / maxDelta) * -100;
-      const nextPercentageUnconstrained = parseFloat(this.track?.dataset["prevPercentage"] ?? "0") + percentage;
-      const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
-
-      this.track?.animate({
-          transform: `translate(${nextPercentage}%, -50%)`
-        }, { duration: 1200, fill: "forwards" });
-
-      Array.prototype.forEach.call(this.track?.getElementsByClassName("image"), (image) => {
-        image.animate({
-          objectPosition: `${100 + nextPercentage}% center`
-        }, { duration: 1200, fill: "forwards" });
-      });
-
-      this.store.dispatch(new UpdateNavigatorPosition(nextPercentage.toString()));
-    });
+  public onClick(link: string) {
+    this.router.navigate([link]);
   }
 
-  ngOnDelete() {
-    this.track?.removeEventListener("pointerdown", (event: Event) => {
-      this.mouseDownAt = (event as PointerEvent).clientX.toString();
-    });
-    window.removeEventListener("pointerup", (event: Event) => {
-      this.mouseDownAt = "0";
-      this.prevPercentage = this.track?.dataset["prevPercentage"] ?? "0";
-    });
-  }
-
-  changeRoute(route: string) {
-    this.router.navigate([route]);
-  }
 }

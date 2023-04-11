@@ -1,17 +1,45 @@
-
-#image-track {
-    display: flex;
-    gap: 4vmin;
+.swiper {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(0%, -50%);
-    user-select: none; 
-  }
-  
-  #image-track > .image {
-    width: 40vmin;
-    height: 64vmin;
-    object-fit: cover;
-    object-position: 100% center;
-  }
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+
+/* .swiper-button-prev {
+    color: white;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%234c71ae'%2F%3E%3C%2Fsvg%3E") !important;
+  } */
+
+swiper > div.swiper-button-next, div.swiper-button-prev {
+    color: white;
+    padding-left: 15vw;
+    padding-right: 15vw;
+}
+
+swiper > div.swiper-pagination.swiper-pagination-fraction.swiper-pagination-horizontal {
+    color: white;
+    font-size: 1rem;
+    padding-bottom : 5vh;
+}
+
+.slide-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: lighter;
+    user-select: none;
+    pointer-events: none;
+}

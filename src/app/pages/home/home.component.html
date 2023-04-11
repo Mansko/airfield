@@ -1,5 +1,14 @@
-<div id="image-track" [attr.data-mouse-down-at]="mouseDownAt" [attr.data-prev-percentage]="prevPercentage">
-    <img class="image" src="assets/images/facial-detection.jpg" draggable="false" (dblclick)="changeRoute('/facial-detection')" />
-    <img class="image" src="assets/images/pose-estimation.png" draggable="false" (dblclick)="changeRoute('/pose-estimation')" />
-    <img class="image" src="assets/images/sound-recognition.jpg" draggable="false" (dblclick)="changeRoute('/sound-recognition')"  />
- </div>
+ <swiper
+    [slidesPerView]="1"
+    [spaceBetween]="10"
+    [navigation]="true"
+    [pagination]="{ type: 'fraction', clickable: true }"
+    [scrollbar]="{ draggable: true }"
+    [speed]="750"
+>
+   <ng-template swiperSlide *ngFor="let slide of slides">
+      <h1 class="slide-title"> {{ slide.title }}</h1>
+      <img [src]="slide.imgsrc" [alt]="slide.title" (click)="onClick(slide.link)" width="100%" height="100%" draggable="false"/>
+   </ng-template>
+</swiper>
+

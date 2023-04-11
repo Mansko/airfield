@@ -13,6 +13,7 @@ import { AppState } from './shared/store/app/app.state';
 import { BackButtonComponent } from './shared/components/back-button/back-button.component';
 import { HTMLVideoDirective } from './shared/directive/htmlvideo.directive';
 import { MediaStreamDirective } from './shared/directive/media-stream.directive';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MediaStreamDirective } from './shared/directive/media-stream.directive'
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SwiperModule,
     NgxsModule.forRoot([AppState]),
   ],
   providers: [],
