@@ -18,11 +18,12 @@
   <button (click)="mediaStream.recordStop()">Record Stop</button>
 </div>
 
-<ng-container *ngIf="picSrc">
+<!-- <ng-container *ngIf="picSrc"> -->
   <hr />
   <h2>Pic Result</h2>
   <img [src]="picSrc" />
-</ng-container>
+  <canvas id="output"></canvas>
+<!-- </ng-container> -->
 
 <ng-container *ngIf="videoSrc">
   <hr />

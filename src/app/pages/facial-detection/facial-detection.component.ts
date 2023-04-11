@@ -1,36 +1,34 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MediaStreamDirective } from 'src/app/shared/directive/media-stream.directive';
-import '@tensorflow-models/face-detection';
-import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
+import { FacialDetectionService } from 'src/app/shared/services/facial-detection/facial-detection.service';
 
-const DETECTOR_CONFIG: faceLandmarksDetection.MediaPipeFaceMeshMediaPipeModelConfig = {
-  runtime: 'mediapipe',
-  solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh',
-  refineLandmarks: true,
-  maxFaces: 4,
-}
 
 @Component({
   templateUrl: './facial-detection.component.html',
   styleUrls: ['./facial-detection.component.css']
 })
-export class FacialDetectionComponent implements OnInit {
+export class FacialDetectionComponent implements AfterViewInit {
   @ViewChild(MediaStreamDirective)
   public mediaStream!: MediaStreamDirective;
 
-  public picSrc!: string;
+  public picSrc!: string | undefined;
   public videoSrc!: SafeUrl;
+  public canvas: HTMLCanvasElement | null = null;
+  public ctx: CanvasRenderingContext2D | null = null;
 
-  private model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
-  private detector: any;
   private rafId: number;
 
-  constructor(private sanitaze: DomSanitizer) { }
+  constructor(private sanitaze: DomSanitizer, private detector: FacialDetectionService) { }
 
-  public async ngOnInit(): Promise<void> {
-    this.detector = await faceLandmarksDetection.createDetector(this.model, DETECTOR_CONFIG);
+  public async ngAfterViewInit(): Promise<void> {
     this.mediaStream.play();
+    this.canvas = document.getElementById('output') as HTMLCanvasElement;
+    this.canvas.width  = 1078;
+    this.canvas.height = 1508;
+    this.ctx = this.canvas?.getContext('2d');
+    console.log(this.canvas);
+    console.log(this.ctx);
   }
 
   public ngOnDestroy(): void {
@@ -38,17 +36,15 @@ export class FacialDetectionComponent implements OnInit {
     window.cancelAnimationFrame(this.rafId);
   }
 
-  public async predict(): Promise<void> {
-    const faces = await this.detector.estimateFaces(this.mediaStream.element, {flipHorizontal: false});
-    console.log(faces);
-    this.rafId = requestAnimationFrame(() => {
-      this.predict()
-    });
-  }
-
   public async onPic(): Promise<void> {
-    this.picSrc = this.mediaStream.take();
-    this.predict();
+    this.detector.estimateFaces(this.mediaStream.element, false).then((faces) => {
+      console.log(faces)
+      this.picSrc = 'true';
+      console.log(this.mediaStream.element)
+      this.detector.drawResults(this.mediaStream.element, this.ctx, faces, false, false);
+    });
+    // this.picSrc = this.mediaStream.take();
+    // console.log(this.picSrc)
   }
 
   public onVideo(data: Blob): void {

@@ -14,6 +14,7 @@ import { BackButtonComponent } from './shared/components/back-button/back-button
 import { HTMLVideoDirective } from './shared/directive/htmlvideo.directive';
 import { MediaStreamDirective } from './shared/directive/media-stream.directive';
 import { SwiperModule } from 'swiper/angular';
+import { FacialDetectionService } from './shared/services/facial-detection/facial-detection.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { SwiperModule } from 'swiper/angular';
     SwiperModule,
     NgxsModule.forRoot([AppState]),
   ],
-  providers: [],
+  providers: [FacialDetectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

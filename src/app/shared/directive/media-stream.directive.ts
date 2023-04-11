@@ -13,7 +13,6 @@ import { EMPTY, Observable, from } from 'rxjs';
 
 import { catchError } from 'rxjs/operators';
 
-// Comment this line if you're using @types/dom-mediacapture-record
 declare const MediaRecorder: any;
 
 @Directive({
@@ -139,6 +138,7 @@ export class MediaStreamDirective extends HTMLVideoDirective implements AfterVie
     this.mediaRecorder.stop(); // Fires ondataavailable's event
   }
 
+
   private userMediaObs(
     config: MediaStreamConstraints
   ): Observable<MediaStream> {
@@ -149,4 +149,5 @@ export class MediaStreamDirective extends HTMLVideoDirective implements AfterVie
       })
     );
   }
+
 }
